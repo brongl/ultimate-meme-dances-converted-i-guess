@@ -1,9 +1,6 @@
-Bypass = "death"
-FELOADLIBRARY = {}
-loadstring(game:GetObjects("rbxassetid://5209815302")[1].Source)()
-loadstring(game:GetObjects("rbxassetid://5325226148")[1].Source)()
+loadstring(game:HttpGet("https://github.com/GenesisFE/Genesis/blob/main/Reanimation/Reanimate",true))()
 
-local model = workspace.non
+local model = game:GetService("Players").LocalPlayer.Character
 local mouse = game:GetService("Players").LocalPlayer:GetMouse()
 local Torso = model.Torso
 local RS = Torso:FindFirstChild("Right Shoulder")
@@ -13,6 +10,8 @@ local LH = Torso:FindFirstChild("Left Hip")
 local Neck = Torso:FindFirstChild("Neck")
 local Torso = model.Torso
 local Head = model.Head
+model.Humanoid.MaxHealth = 500000000000
+model.Humanoid.Health = 500000000000
 local Humanoid = model.Humanoid
 local LeftArm = model["Left Arm"]
 local LeftLeg = model["Left Leg"]
@@ -21,11 +20,11 @@ local RightLeg = model["Right Leg"]
 local RootPart = model.HumanoidRootPart
 local attack = false
 local idle = 0
-local Gen = "Girl"
+local Gen = "Boy"
 local ToolMode = 1
 local sprintmode=false
 local jp = 50
-local ws = 6
+local ws = 8
 local inAir=true
 local inAir2=true
 local equipped = true
@@ -44,7 +43,8 @@ local cn = CFrame.new
 local cf = CFrame.new
 local ca2 = CFrame.Angles
 local mf = math.floor
-local Create = FELOADLIBRARY.Create
+local RbxUtility = LoadLibrary("RbxUtility")
+local Create = RbxUtility.Create
 local canstoptuant1 = false
 local stoptuant1 = false
 local MenyOpen = false
@@ -74,7 +74,8 @@ end
 stopAnimations()
 wait(.1)
 
-local rayCast = function(Pos, Dir, Max, Ignore)
+rayCast = function(Pos, Dir, Max, Ignore)
+  
   return game:service("Workspace"):FindPartOnRay(Ray.new(Pos, Dir.unit * (Max or 999.999)), Ignore)
 end
 RS.C1 = cn(0, 0.5, 0) 
@@ -95,7 +96,7 @@ function RemoveOutlines(part)
 end
 	
 
-CFuncs = {
+	CFuncs = {
 Part = {Create = function(Parent, Material, Reflectance, Transparency, BColor, Name, Size)
 	
 	local Part = Create("Part")({Parent = Parent, Reflectance = Reflectance, Transparency = Transparency, CanCollide = false, Locked = true, BrickColor = BrickColor.new(tostring(BColor)), Name = Name, Size = Size, Material = Material})
@@ -168,7 +169,7 @@ end
 }
 }
 
-local so = function(id, par, vol, pit, AlTime)
+so = function(id, par, vol, pit, AlTime)
 
 if AlTime ~= nil then
 
@@ -183,7 +184,7 @@ end
 
 
 local ParticEffect1 = Create("ParticleEmitter"){
-Color = ColorSequence.new(Color3.new (0, 1, 0), Color3.new (0, 0, 0)),
+Color = ColorSequence.new(Color3.new (1, 1, 1), Color3.new (0, 0, 0)),
 Transparency =  NumberSequence.new({NumberSequenceKeypoint.new(0,1),NumberSequenceKeypoint.new(0.2,0),NumberSequenceKeypoint.new(1,1)}),
 Size = NumberSequence.new({NumberSequenceKeypoint.new(0,.15),NumberSequenceKeypoint.new(0.5,.01),NumberSequenceKeypoint.new(1,0)}),
 Texture = "rbxassetid://596872069",
@@ -274,7 +275,7 @@ end
 
 
 
-local function JumpAfterEffect()
+function JumpAfterEffect()
 	if attack == false then
 	attack = true
 
@@ -317,7 +318,7 @@ end
 
 
 
-local function SlashAnim()
+function SlashAnim()
 	if toolAon == false then
 	toolAon= true
 	MoveArms = false
@@ -350,7 +351,7 @@ end
 
 
 
-local function LungeAnim()
+function LungeAnim()
  stopTA = true
 MoveArms = false		 
 	
@@ -389,13 +390,13 @@ end
 
 
 
-local function getTool()	
+function getTool()	
 	for _, kid in ipairs(model:GetChildren()) do
 		if kid.className == "Tool" then return kid end
 	end
 	return nil
 end
-local function getToolAnim(tool)
+function getToolAnim(tool)
 	for _, c in ipairs(tool:GetChildren()) do
 		if c.Name == "toolanim" and c.className == "StringValue" then
 			return c
@@ -403,7 +404,7 @@ local function getToolAnim(tool)
 	end
 	return nil
 end
-local function animateTool()
+function animateTool()
 	
 	if (toolAnim == "None") then
 		if ToolMode == 1 then
@@ -445,15 +446,15 @@ sine = sine + change
 
   local torvel = (RootPart.Velocity * Vector3.new(1, 0, 1)).magnitude
     local velderp = RootPart.Velocity.y
-    local hitfloor = rayCast(RootPart.Position, CFrame.new(RootPart.Position, RootPart.Position - Vector3.new(0, 1, 0)).lookVector, 4, model)
+    hitfloor = rayCast(RootPart.Position, CFrame.new(RootPart.Position, RootPart.Position - Vector3.new(0, 1, 0)).lookVector, 4, model)
 
 
 if sprintmode == true then
 jp = 60
-ws = 24
+ws = 44
 else	
 jp = 50
-ws = 6
+ws = 8
 end
 
 if hitfloor ~= nil then
@@ -825,7 +826,7 @@ local Song = Instance.new("Sound", Torso)
 Song.SoundId  = "http://www.roblox.com/asset/?id=748575516"
 
 
-Song.Volume = 10
+Song.Volume = 2
 
 attack= true
 --[
@@ -1964,7 +1965,6 @@ GunPart.Anchored = false
 GunPart.CFrame = CFrame.new(0,0,0)
 GunPart.Size = Vector3.new(0.85,.85,.05)
 GunPart.Material = "Neon"
-GunPart.BrickColor = BrickColor.new("Shamrock")
 local GunPartWeld = Instance.new("Weld",GunPart)	
 GunPartWeld.C0 = CFrame.new(0,0,0.99) * CFrame.Angles(math.rad(90),math.rad(0),math.rad(0))
 GunPartWeld.Part0 = GunPart
@@ -2003,11 +2003,11 @@ end
 
 	coroutine.resume(coroutine.create(function()	
 
-local Glow1 = Color3.new(0,1,0)
-local Glow2 = Color3.new(0,1,0)
+local Glow1 = Color3.new(1,1,1)
+local Glow2 = Color3.new(1,1,1)
    local hitray,pos = rayCast(GunPart.Position, GunPart.CFrame.lookVector, 5000, model)
 
-so("138335183", RightArm, 10, .9)
+so("834546352", RightArm, 2, 1)
 
 local WalkPart = Instance.new("Part",model)	
 WalkPart.Transparency = 1
@@ -2141,7 +2141,7 @@ RH.C0 = RH.C0:lerp(CFrame.new(.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.
 LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(-0),math.rad(0),math.rad(-2.5+ .1 * math.cos(sine / 20))),.15)
 
 end	
-so("165487479", Torso, 9, 1)	
+so("912067661", Torso, 2, .8)	
 for i = 0,2,.1 do swait()
 
 Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(5+1 * math.cos(sine / 20)),math.rad(0),math.rad(-10)),.15)
@@ -2153,7 +2153,7 @@ LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame
 
 end	
 
-for i = 0,3,.1 do swait()
+for i = 0,4,.1 do swait()
 
 Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(5+1 * math.cos(sine / 20)),math.rad(0),math.rad(-40)),.15)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, 0, -.1 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(40)),.15)
@@ -2164,7 +2164,7 @@ LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame
 
 end	
 
-for i = 0,2,.1 do swait()
+for i = 0,4,.1 do swait()
 
 Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(5+1 * math.cos(sine / 20)),math.rad(0),math.rad(-20)),.15)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, 0, -.1 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(20)),.15)
@@ -2175,7 +2175,7 @@ LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame
 
 end	
 
-for i = 0,2,.1 do swait()
+for i = 0,4,.1 do swait()
 
 Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(5+1 * math.cos(sine / 20)),math.rad(0),math.rad(-20)),.15)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, 0, -.1 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(10)),.15)
@@ -2205,7 +2205,7 @@ RH.C0 = RH.C0:lerp(CFrame.new(.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.
 LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(-0),math.rad(0),math.rad(-2.5+ .1 * math.cos(sine / 20))),.15)
 
 end	
-for i = 0,2,.1 do swait()
+for i = 0,4,.1 do swait()
 
 Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(5+1 * math.cos(sine / 20)),math.rad(0),math.rad(-0)),.15)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, 0, -.1 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0)),.15)
@@ -2283,7 +2283,7 @@ end
 
 	if HasHum == true and 	ModelCanSlap == true and slaped2 ~= nil  then
 	else
-	  so("887591869", Torso, 10, 1)		
+	  so("887591869", Torso, 1, 1)		
 	
 	end
 
@@ -2371,7 +2371,7 @@ LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame
 
 
 end	
-so("146163534", Torso, 10, 1.3)
+so("146163534", Torso, 1, 1.3)
 for i = 0,2,0.1 do
 swait()
 
@@ -2516,7 +2516,7 @@ RH.C0 = RH.C0:lerp(CFrame.new(.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.
 LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(-0),math.rad(0),math.rad(-2.5+ .1 * math.cos(sine / 20))),.15)
 
 end
-so("666675542", Torso, 10, 1)
+so("666675542", Torso, 2, 1)
 for i = 0,3,.1 do swait()
 Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(15+2 * math.cos(sine / 20)),math.rad(0),math.rad(-15)),.1)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, 0, -.1 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0)),.15)
@@ -2554,7 +2554,7 @@ end
 if k == "q" and  MenyOpen == true and canstoptuant1 == true then
 MenyOpen = false
 stoptuant1 = true
-so("145303015", Torso, 10, 1,25)
+so("145303015", Torso, 2, 1,25)
 
 
 for i = 0,2,.1 do swait()
@@ -2592,7 +2592,7 @@ LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame
 
 end
 for i = 0,36,.1 do swait()
-Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(3+4 * math.cos(sine / 3)),math.rad(0),math.rad(0)),.1)
+Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(35+466 * math.cos(sine / 3)),math.rad(0),math.rad(0)),.1)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, 0, -.1 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0)),.15)
 RS.C0 = RS.C0:lerp(CFrame.new(1.5, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(1- 1 * math.cos(sine / 20))),.1)
 LS.C0 = LS.C0:lerp(CFrame.new(-1.5, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(-1+ 1 * math.cos(sine / 20))),.1)
@@ -2601,7 +2601,7 @@ LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame
 
 end
 for i = 0,10,.1 do swait()
-Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-13+4 * math.cos(sine / 3)),math.rad(0),math.rad(30)),.1)
+Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-43+466 * math.cos(sine / 3)),math.rad(0),math.rad(30)),.1)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, 0, -.1 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0)),.15)
 RS.C0 = RS.C0:lerp(CFrame.new(1.5, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(1- 1 * math.cos(sine / 20))),.1)
 LS.C0 = LS.C0:lerp(CFrame.new(-1.5, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(-1+ 1 * math.cos(sine / 20))),.1)
@@ -2610,7 +2610,7 @@ LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame
 
 end
 for i = 0,10,.1 do swait()
-Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-6+4 * math.cos(sine / 3)),math.rad(0),math.rad(00)),.1)
+Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-30+466 * math.cos(sine / 3)),math.rad(0),math.rad(00)),.1)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, 0, -.1 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0)),.15)
 RS.C0 = RS.C0:lerp(CFrame.new(1.5, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(1- 1 * math.cos(sine / 20))),.1)
 LS.C0 = LS.C0:lerp(CFrame.new(-1.5, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(-1+ 1 * math.cos(sine / 20))),.1)
@@ -2619,7 +2619,7 @@ LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame
 
 end
 for i = 0,5,.1 do swait()
-Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(6+4 * math.cos(sine / 3)),math.rad(0),math.rad(0)),.1)
+Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(18+466 * math.cos(sine / 3)),math.rad(0),math.rad(0)),.1)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, 0, -.1 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0)),.15)
 RS.C0 = RS.C0:lerp(CFrame.new(1.5, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(30),math.rad(0),math.rad(1- 1 * math.cos(sine / 20))),.1)
 LS.C0 = LS.C0:lerp(CFrame.new(-1.5, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(-1+ 1 * math.cos(sine / 20))),.1)
@@ -2628,7 +2628,7 @@ LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame
 
 end
 for i = 0,10,.1 do swait()
-Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-6+4 * math.cos(sine / 3)),math.rad(0),math.rad(0)),.1)
+Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-6+466 * math.cos(sine / 3)),math.rad(0),math.rad(0)),.1)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, 0, -.1 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0)),.15)
 RS.C0 = RS.C0:lerp(CFrame.new(1.5, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(110),math.rad(0),math.rad(1- 1 * math.cos(sine / 20))),.1)
 LS.C0 = LS.C0:lerp(CFrame.new(-1.5, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(110),math.rad(0),math.rad(-1+ 1 * math.cos(sine / 20))),.1)
@@ -2637,7 +2637,7 @@ LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame
 
 end
 for i = 0,5,.1 do swait()
-Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(6+4 * math.cos(sine / 3)),math.rad(0),math.rad(0)),.1)
+Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(10+466 * math.cos(sine / 3)),math.rad(0),math.rad(0)),.1)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, 0, -.1 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0)),.15)
 RS.C0 = RS.C0:lerp(CFrame.new(1.3, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(60),math.rad(0),math.rad(45- 1 * math.cos(sine / 20))),.1)
 LS.C0 = LS.C0:lerp(CFrame.new(-1.5, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(-1+ 1 * math.cos(sine / 20))),.1)
@@ -2646,7 +2646,7 @@ LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame
 
 end
 for i = 0,5,.1 do swait()
-Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(6+4 * math.cos(sine / 3)),math.rad(0),math.rad(0)),.1)
+Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(6+446 * math.cos(sine / 3)),math.rad(0),math.rad(0)),.1)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, 0, -.1 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0)),.15)
 RS.C0 = RS.C0:lerp(CFrame.new(1.3, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(60),math.rad(0),math.rad(-45- 1 * math.cos(sine / 20))),.1)
 LS.C0 = LS.C0:lerp(CFrame.new(-1.5, 0.5- .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(-1+ 1 * math.cos(sine / 20))),.1)
@@ -2679,7 +2679,7 @@ RH.C0 = RH.C0:lerp(CFrame.new(.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.
 LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(-0),math.rad(0),math.rad(-2.5+ .1 * math.cos(sine / 20))),.15)
 
 end
-so("1058417264", Torso, 10, 1)
+so("1058417264", Torso, 2, 1)
 for i = 0,1,.1 do swait()
 
 Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-5+2 * math.cos(sine / 20)),math.rad(0),math.rad(0)),.3)
@@ -2699,7 +2699,7 @@ RH.C0 = RH.C0:lerp(CFrame.new(.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.
 LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(-0),math.rad(0),math.rad(-2.5+ .1 * math.cos(sine / 20))),.15)
 
 end
---so("593142105", Torso, 10, .8)
+--so("593142105", Torso, 3, .8)
 for i = 0,3,.1 do swait()
 
 Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-8+2 * math.cos(sine / 20)),math.rad(0),math.rad(0)),.3)
@@ -2727,7 +2727,7 @@ end
 if k == "p" and  MenyOpen == true and canstoptuant1 == true then
 MenyOpen = false
 stoptuant1 = true
-so("252252871", Torso, 10, 1,9)
+so("252252871", Torso, 3, 1,9)
 -- 10 sec start
 for i = 0,3,.1 do swait()
 Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(3+2 * math.cos(sine / 20)),math.rad(0),math.rad(0)),.1)
@@ -2861,7 +2861,7 @@ RH.C0 = RH.C0:lerp(CFrame.new(.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.
 LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(-0),math.rad(0),math.rad(-2.5+ .1 * math.cos(sine / 20))),.15)
 
 end
-so("140364784", Torso, 10, 1)
+so("140364784", Torso, 2, 1)
 for i = 0,1,.1 do swait()
 
 Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-5+2 * math.cos(sine / 20)),math.rad(0),math.rad(0)),.3)
@@ -2881,7 +2881,7 @@ RH.C0 = RH.C0:lerp(CFrame.new(.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.
 LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(-0),math.rad(0),math.rad(-5.5+ .1 * math.cos(sine / 20))),.15)
 
 end
---so("593142105", Torso, 10, .8)
+--so("593142105", Torso, 3, .8)
 for i = 0,1,.1 do swait()
 
 Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(-8+2 * math.cos(sine / 20)),math.rad(0),math.rad(0)),.3)
@@ -2924,9 +2924,9 @@ end
 if k == "x" and  MenyOpen == true and canstoptuant1 == true then
 MenyOpen = false
 stoptuant1 = true
-so("135359981", Torso, 10, 1.2)
+so("1080611063", Torso, 2, 1.2)
 for i = 0,14.8,.1 do swait()
-Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0+ 15 * math.cos(sine / 4))),.6)
+Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(0+ 95 * math.cos(sine / 4))),.6)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, .5, -.15 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(20),math.rad(0),math.rad(0)),.15)
 RS.C0 = RS.C0:lerp(CFrame.new(1.3, 0.6- .03 * math.cos(sine / 20), -.1) * CFrame.Angles(math.rad(180- 15 * math.cos(sine / 4)),math.rad(0),math.rad(-30- 1 * math.cos(sine / 20))),.1)
 LS.C0 = LS.C0:lerp(CFrame.new(-1.3, 0.6- .03 * math.cos(sine / 20), -.1) * CFrame.Angles(math.rad(180+ 15 * math.cos(sine / 4)),math.rad(0),math.rad(30+ 1 * math.cos(sine / 20))),.1)
@@ -2940,7 +2940,7 @@ end
 if k == "t" and  MenyOpen == true and canstoptuant1 == true then
 MenyOpen = false
 stoptuant1 = true
-so("138110466", Torso, 10, 1)
+so("138110466", Torso, 2, 1)
 for i = 0,2,.1 do swait()
 Neck.C0 = Neck.C0:lerp(NeckCF*CFrame.new(0, 0, 0) * CFrame.Angles(math.rad(3+2 * math.cos(sine / 20)),math.rad(0),math.rad(0)),.1)
 RJ.C0 = RJ.C0:lerp(RootCF*CFrame.new(0, 0, -.1 +-.03 * math.cos(sine / 20)) * CFrame.Angles(math.rad(0),math.rad(0),math.rad(180)),.13)
@@ -2979,7 +2979,7 @@ end
 if k == "c" and  MenyOpen == true and canstoptuant1 == true then
 MenyOpen = false
 stoptuant1 = true
-so("288824798", Torso, 10, 1)
+so("288824798", Torso, 2, 1)
 
 
 for i = 0,4,.1 do swait()
@@ -3031,7 +3031,7 @@ end
 if k == "z" and  MenyOpen == true and canstoptuant1 == true then
 MenyOpen = false
 stoptuant1 = true
-so("275278234", Torso, 10, 1)
+so("275278234", Torso, 2, 1)
 
 
 for i = 0,2,.1 do swait()
@@ -3063,7 +3063,7 @@ end
 if k == "h" and  MenyOpen == true and canstoptuant1 == true then
 MenyOpen = false
 stoptuant1 = true
-so("135891629", Torso, 10, 1)
+so("135891629", Torso, 2, 1)
 
 
 for i = 0,7,.1 do swait()
@@ -3114,7 +3114,7 @@ end
 if k == "v" and  MenyOpen == true and canstoptuant1 == true then
 MenyOpen = false
 stoptuant1 = true
-so("290082048", Torso, 10, 1)
+so("290082048", Torso, 2, 1)
 
 
 for i = 0,1,.1 do swait()
@@ -3163,7 +3163,7 @@ RH.C0 = RH.C0:lerp(CFrame.new(.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.
 LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(-0),math.rad(0),math.rad(-2.5+ .1 * math.cos(sine / 20))),.15)
 
 end
-so("150611842", Torso, 10, 1)
+so("150611842", Torso, 2, 1)
 
 
 for i = 0,2,.1 do swait()
@@ -3213,7 +3213,7 @@ RH.C0 = RH.C0:lerp(CFrame.new(.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.
 LH.C0 = LH.C0:lerp(CFrame.new(-.5, -0.95+ .03 * math.cos(sine / 20), 0) * CFrame.Angles(math.rad(-0),math.rad(0),math.rad(-2.5+ .1 * math.cos(sine / 20))),.15)
 
 end
-so("141349049", Torso, 10, 1)
+so("141349049", Torso, 2, 1)
 
 
 for i = 0,2,.1 do swait()
@@ -3283,7 +3283,7 @@ if k == "y" and  MenyOpen == true and canstoptuant1 == true then
 MenyOpen = false
 stoptuant1 = true
 
-so("738087836", Torso, 10, 1)
+so("738087836", Torso, 2, 1)
 
 for i = 0,3,.1 do swait()
 
@@ -3327,682 +3327,3 @@ end
 
 
 end)
-
---[[
-  / TO GENESIS USERS: If you are trying to use this reanimaton, get it in Emper's Discord below, not from this page.
-  / Emperean Reanimate V2.1
-  / made by: emperss#0
-  / join: discord.gg/5PMtk6PJf5
-  / dont steal or change credits
-  "200 variables limit when? never cuz ur supposed to use it in a loadstring"
-]]
-
-local Options = nil
-local OptionsAccessories = nil
-local OptionsDebug = nil
-local OptionsDebugTransparency = nil
-local OptionsFling = nil
-local OptionsDisableScripts = nil
-local OptionsDisableGUIs = nil
-
-local BindableEvent = nil
-local Boolean = false
-local Humanoid = nil
-local Rig = nil
-local RigHumanoid = nil
-local RigHumanoidRootPart = nil
-local Success = false
-local Time = nil
-local DeltaTime = nil
-local LastTime = nil
-
-local Attachments = { }
-local BaseParts = { }
-local Blacklist = { }
-local Enableds = { }
-local Highlights = { }
-local RBXScriptConnections = { }
-local RigAccessories = { }
-local Tables = { }
-local Targets = { }
-
-local CFrame = CFrame
-local CFrameAngles = CFrame.Angles
-local CFrameidentity = CFrame.identity
-local CFramenew = CFrame.new
-
-local coroutine = coroutine
-local coroutinecreate = coroutine.create
-local coroutineclose = coroutine.close
-local coroutineresume = coroutine.resume
-
-local Enum = Enum
-local HumanoidStateType = Enum.HumanoidStateType
-local Physics = HumanoidStateType.Physics
-local Running = HumanoidStateType.Running
-local Track = Enum.CameraType.Track
-local UserInputType = Enum.UserInputType
-local MouseButton1 = UserInputType.MouseButton1
-local Touch = UserInputType.Touch
-
-local game = game
-local Clone = game.Clone
-local Destroy = game.Destroy
-local FindFirstAncestorOfClass = game.FindFirstAncestorOfClass
-local FindFirstChildOfClass = game.FindFirstChildOfClass
-local GetPropertyChangedSignal = game.GetPropertyChangedSignal
-local GetChildren = game.GetChildren
-local GetDescendants = game.GetDescendants
-local IsA = game.IsA
-local RunService = FindFirstChildOfClass(game, "RunService")
-local PostSimulation = RunService.PostSimulation
-local PreRender = RunService.PreRender
-local PreSimulation = RunService.PreSimulation
-local Connect = PostSimulation.Connect
-local Disconnect = Connect(GetPropertyChangedSignal(game, "Parent"), function() end).Disconnect
-local Wait = PostSimulation.Wait
-local StarterGui = FindFirstChildOfClass(game, "StarterGui")
-local SetCore = StarterGui.SetCore
-local UserInputService = FindFirstChildOfClass(game, "UserInputService")
-local Workspace = FindFirstChildOfClass(game, "Workspace")
-local CurrentCamera = Workspace.CurrentCamera
-
-local Instancenew = Instance.new
-
-local LocalPlayer = FindFirstChildOfClass(game, "Players").LocalPlayer
-local Mouse = LocalPlayer:GetMouse()
-
-local math = math
-local mathrandom = math.random
-local mathsin = math.sin
-
-local osclock = os.clock
-
-local pairs = pairs
-local pcall = pcall
-
-local script = script
-
-local stringfind = string.find
-
-local table = table
-local tableclear = table.clear
-local tablefind = table.find
-local tableinsert = table.insert
-local tableremove = table.remove
-
-local task = task
-local taskdefer = task.defer
-local taskdelay = task.delay
-local taskspawn = task.spawn
-local taskwait = task.wait
-
-local sethiddenproperty = sethiddenproperty or function() end
-
-local type = type
-local typeof = typeof
-
-local Vector3 = Vector3
-local Vector3new = Vector3.new
-local Vector3yAxis = Vector3.yAxis
-local Vector3zero = Vector3.zero
-
-local CameraCFrame = CFrameidentity
-
-local LimbSize = Vector3new(1, 2, 1)
-local TorsoSize = Vector3new(2, 2, 1)
-local Vector314 = Vector3new(16384, 16384, 16384)
-
-local function BreakJoints(Parent)
-  for _, Instance in pairs(GetDescendants(Parent)) do
-    if IsA(Instance, "JointInstance") then
-      Destroy(Instance)
-    end
-  end
-end
-
-local function CameraSubject()
-  CurrentCamera.CameraSubject = RigHumanoid
-  Wait(PreRender)
-  CurrentCamera.CFrame = CameraCFrame
-end
-
-local function CameraType()
-  if CurrentCamera.CameraType ~= Track then
-    CurrentCamera.CameraType = Track
-  end
-end
-
-local function Camera()
-  local Camera = Workspace.CurrentCamera
-
-  if Camera then
-    CameraCFrame = Camera.CFrame
-    CurrentCamera = Camera
-
-    CameraSubject()
-    CameraType()
-
-    tableinsert(RBXScriptConnections, Connect(GetPropertyChangedSignal(Camera, "CameraSubject"), CameraSubject))
-    tableinsert(RBXScriptConnections, Connect(GetPropertyChangedSignal(Camera, "CameraType"), CameraType))
-  end
-end
-
-local function FindFirstChildOfClassAndName(Parent, ClassName, Name)
-  for Index, Instance in pairs(GetChildren(Parent)) do
-    if IsA(Instance, ClassName) and Instance.Name == Name then
-      return Instance
-    end
-  end
-end
-
-local function WaitForChildOfClassAndName(Parent, ...)
-  local Instance = FindFirstChildOfClassAndName(Parent, ...)
-
-  while not Instance and typeof(Parent) == "Instance" do
-    Instance = FindFirstChildOfClassAndName(Parent, ...)
-    Wait(Parent.ChildAdded)
-  end
-
-  return Instance
-end
-
-local function Invisible(Instance)
-  if IsA(Instance, "BasePart") or IsA(Instance, "Decal") then
-    Instance.Transparency = OptionsDebugTransparency
-  elseif IsA(Instance, "ForceField") or IsA(Instance, "Explosion") then
-    Instance.Visible = false
-  elseif IsA(Instance, "ParticleEmitter") or IsA(Instance, "Fire") or IsA(Instance, "Sparkles") then
-    Instance.Enabled = false
-  end
-end
-
-local Model = Instancenew("Model")
-
-local function Part(Name, Size)
-  local Part = Instancenew("Part")
-  Part.Name = Name
-  Part.Size = Size
-  Part.Parent = Model
-
-  return Part
-end
-
-local function Motor6D(Name, C0, C1, Part0, Part1)
-  local Motor6D = Instancenew("Motor6D")
-  Motor6D.Name = Name
-  Motor6D.C0 = C0
-  Motor6D.C1 = C1
-  Motor6D.Part0 = Part0
-  Motor6D.Part1 = Part1
-  Motor6D.Parent = Part0
-
-  return Motor6D
-end
-
-local function Attachment(Name, CFrame, Parent)
-  local Attachment = Instancenew("Attachment")
-  Attachment.Name = Name
-  Attachment.CFrame = CFrame
-  Attachment.Parent = Parent
-
-  return Attachment
-end
-
-local Head = Part("Head", Vector3new(2, 1, 1))
-local GetJoints = Head.GetJoints
-local Torso = Part("Torso", TorsoSize)
-local LeftArm = Part("Left Arm", LimbSize)
-local RightArm = Part("Right Arm", LimbSize)
-local LeftLeg = Part("Left Leg", LimbSize)
-local RightLeg = Part("Right Leg", LimbSize)
-local HumanoidRootPart = Part("HumanoidRootPart", TorsoSize)
-
-Motor6D("Right Shoulder", CFramenew(1, 0.5, 0, 0, 0, 1, 0, 1, 0, -1, -0, -0), CFramenew(-0.5, 0.5, 0, 0, 0, 1, 0, 1, 0, -1, -0, -0), Torso, RightArm)
-Motor6D("Left Shoulder", CFramenew(-1, 0.5, 0, -0, -0, -1, 0, 1, 0, 1, 0, 0), CFramenew(0.5, 0.5, 0, -0, -0, -1, 0, 1, 0, 1, 0, 0), Torso, LeftArm)
-Motor6D("Right Hip", CFramenew(1, -1, 0, 0, 0, 1, 0, 1, 0, -1, -0, -0), CFramenew(0.5, 1, 0, 0, 0, 1, 0, 1, 0, -1, -0, -0), Torso, RightLeg)
-Motor6D("Left Hip", CFramenew(-1, -1, 0, -0, -0, -1, 0, 1, 0, 1, 0, 0), CFramenew(-0.5, 1, 0, -0, -0, -1, 0, 1, 0, 1, 0, 0), Torso, LeftLeg)
-Motor6D("Neck", CFramenew(0, 1, 0, -1, -0, -0, 0, 0, 1, 0, 1, 0), CFramenew(0, -0.5, 0, -1, -0, -0, 0, 0, 1, 0, 1, 0), Torso, Head)
-Motor6D("RootJoint", CFramenew(0, 0, 0, -1, -0, -0, 0, 0, 1, 0, 1, 0), CFramenew(0, 0, 0, -1, -0, -0, 0, 0, 1, 0, 1, 0), HumanoidRootPart, Torso)
-
-Attachment("HairAttachment", CFramenew(0, 0.600000024, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), Head)
-Attachment("HatAttachment", CFramenew(0, 0.600000024, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), Head)
-Attachment("FaceFrontAttachment", CFramenew(0, 0, -0.600000024, 1, 0, 0, 0, 1, 0, 0, 0, 1), Head)
-Attachment("FaceCenterAttachment", CFramenew(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), Head)
-Attachment("NeckAttachment", CFramenew(0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), Torso)
-Attachment("BodyFrontAttachment", CFramenew(0, 0, -0.5, 1, 0, 0, 0, 1, 0, 0, 0, 1), Torso)
-Attachment("BodyBackAttachment", CFramenew(0, 0, 0.5, 1, 0, 0, 0, 1, 0, 0, 0, 1), Torso)
-Attachment("LeftCollarAttachment", CFramenew(-1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), Torso)
-Attachment("RightCollarAttachment", CFramenew(1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), Torso)
-Attachment("WaistFrontAttachment", CFramenew(0, -1, -0.5, 1, 0, 0, 0, 1, 0, 0, 0, 1), Torso)
-Attachment("WaistCenterAttachment", CFramenew(0, -1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), Torso)
-Attachment("WaistBackAttachment", CFramenew(0, -1, 0.5, 1, 0, 0, 0, 1, 0, 0, 0, 1), Torso)
-Attachment("LeftShoulderAttachment", CFramenew(0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), LeftArm)
-Attachment("LeftGripAttachment", CFramenew(0, -1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), LeftArm)
-Attachment("RightShoulderAttachment", CFramenew(0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), RightArm)
-Attachment("RightGripAttachment", CFramenew(0, -1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), RightArm)
-Attachment("LeftFootAttachment", CFramenew(0, -1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), LeftLeg)
-Attachment("RightFootAttachment", CFramenew(0, -1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), RightLeg)
-Attachment("RootAttachment", CFramenew(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1), HumanoidRootPart)
-
-Instancenew("BodyColors", Model)
-local Humanoid = Instancenew("Humanoid", Model)
-local ChangeState = Humanoid.ChangeState
-local Move = Humanoid.Move
-Instancenew("Animator", Humanoid)
-
-local face = Instancenew("Decal")
-face.Name = "face"
-face.Texture = "rbxasset://textures/face.png"
-face.Parent = Head
-
-local SpecialMesh = Instancenew("SpecialMesh")
-SpecialMesh.Name = "Mesh"
-SpecialMesh.MeshType = Enum.MeshType.Head
-SpecialMesh.Scale = Vector3new(1.25, 1.25, 1.25)
-SpecialMesh.Parent = Head
-
-Instancenew("Shirt", Model)
-Instancenew("Pants", Model)
-Instancenew("ShirtGraphic", Model)
-
-local Animate = Instancenew("LocalScript")
-Animate.Name = "Animate"
-Animate.Enabled = true
-Animate.Parent = Model
-
-Model.Name = LocalPlayer.Name
-
-local function DescendantAdded(Instance)
-  if IsA(Instance, "Attachment") then
-    local Handle = Instance.Parent
-
-    if IsA(Handle, "BasePart") then
-      local AttachmentsAttachment = Attachments[Instance.Name]
-
-      if AttachmentsAttachment then
-        local MeshId = ""
-        local TextureId = ""
-
-        if IsA(Handle, "MeshPart") then
-          MeshId = Handle.MeshId
-          TextureId = Handle.TextureID
-        else
-          local SpecialMesh = FindFirstChildOfClass(Handle, "SpecialMesh")
-
-          if SpecialMesh then
-            MeshId = SpecialMesh.MeshId
-            TextureId = SpecialMesh.TextureId
-          end
-        end
-
-        for Index, Table in pairs(OptionsAccessories) do
-          if stringfind(MeshId, Table.MeshId) and stringfind(TextureId, Table.TextureId or Table.Texture) then
-            local Instance = FindFirstChildOfClassAndName(Rig, "BasePart", Table.Name)
-
-            if Instance and not tablefind(Blacklist, Instance) then
-              tableinsert(Blacklist, Instance)
-              BreakJoints(Handle)
-              tableinsert(Tables, { Part0 = Handle, Part1 = Instance, CFrame = Table.CoordinateFrame, LastPosition = Instance.Position })
-              return
-            end
-          end
-        end
-        for Index, Table in pairs(RigAccessories) do
-          local TableHandle = Table.Handle
-
-          if typeof(TableHandle) == "Instance" and Table.MeshId == MeshId and Table.TextureId == TextureId then
-            BreakJoints(Handle)
-            tableinsert(Tables, { Part0 = Handle, Part1 = TableHandle, LastPosition = TableHandle.Position })
-            return
-          end
-        end
-
-        local Accessory = Handle.Parent
-
-        if IsA(Accessory, "Accessory") then
-          local AccessoryClone = Instancenew("Accessory")
-          AccessoryClone.Name = Accessory.Name
-
-          local HandleClone = Clone(Handle)
-          Invisible(HandleClone)
-          BreakJoints(HandleClone)
-          HandleClone.Parent = AccessoryClone
-
-          local Weld = Instancenew("Weld")
-          Weld.Name = "AccessoryWeld"
-          Weld.C0 = Instance.CFrame
-          Weld.C1 = AttachmentsAttachment.CFrame
-          Weld.Part0 = HandleClone
-          Weld.Part1 = AttachmentsAttachment.Parent
-          Weld.Parent = HandleClone
-
-          tableinsert(RigAccessories, { Handle = HandleClone, MeshId = MeshId, TextureId = TextureId })
-          tableinsert(Tables, { Part0 = Handle, Part1 = HandleClone, LastPosition = HandleClone.Position })
-
-          AccessoryClone.Parent = Rig
-        end
-      end
-    end
-  elseif IsA(Instance, "BasePart") then
-    Instance.CanQuery = false
-    tableinsert(BaseParts, Instance)
-  end
-end
-
-local function ApplyDescription()
-  local Description = Humanoid:GetAppliedDescription()
-  Description.HatAccessory = ""
-  Description.BackAccessory = ""
-  Description.FaceAccessory = ""
-  Description.HairAccessory = ""
-  Description.NeckAccessory = ""
-  Description.FrontAccessory = ""
-  Description.WaistAccessory = ""
-  Description.ShouldersAccessory = ""
-  RigHumanoid:ApplyDescription(Description)
-end
-
-local function CharacterAdded()
-  local Character = LocalPlayer.Character
-
-  if Character and Character ~= Rig then
-    tableclear(BaseParts)
-    tableclear(Blacklist)
-    tableclear(Tables)
-
-    if CurrentCamera then
-      CameraCFrame = CurrentCamera.CFrame
-    end
-
-    for Index, Instance in pairs(GetDescendants(Character)) do
-      DescendantAdded(Instance)
-    end
-
-    tableinsert(RBXScriptConnections, Connect(Character.DescendantAdded, DescendantAdded))
-
-    Humanoid = WaitForChildOfClassAndName(Character, "Humanoid", "Humanoid")
-    local HumanoidRootPart = WaitForChildOfClassAndName(Character, "BasePart", "HumanoidRootPart")
-
-    if Boolean then
-      Camera()
-
-      if HumanoidRootPart then
-        RigHumanoidRootPart.CFrame = HumanoidRootPart.CFrame
-        Boolean = false
-      end
-
-      if RigHumanoid and Humanoid then
-        pcall(ApplyDescription)
-      end
-    end
-
-    if HumanoidRootPart then
-      for Index, Table in pairs(Targets) do
-        if not HumanoidRootPart then
-          break
-        end
-
-        if Humanoid then
-          ChangeState(Humanoid, Physics)
-        end
-
-        local Target = Table.Target
-
-        local Timeout = Time + 0.5
-        local LastPosition = Target.Position
-
-        while Target and HumanoidRootPart do
-          if Time > Timeout then
-            break
-          end
-
-          local Position = Target.Position
-          local LinearVelocity = ( Position - LastPosition ) / DeltaTime
-
-          if LinearVelocity.Magnitude > 50 then
-            break
-          end
-
-          LastPosition = Position
-
-          HumanoidRootPart.AssemblyAngularVelocity = Vector314
-          HumanoidRootPart.AssemblyLinearVelocity = Vector314
-
-          HumanoidRootPart.CFrame = Target.CFrame * CFramenew(0, 0, 4 * mathsin(Time * 30)) * CFrameAngles(mathrandom(- 360, 360), mathrandom(- 360, 360), mathrandom(- 360, 360)) + ( LinearVelocity * 0.5) 
-
-          taskwait()
-        end
-
-        local Highlight = Table.Highlight
-
-        if Highlight then
-          Destroy(Highlight)
-        end
-
-        Targets[Index] = nil
-      end
-
-      if Humanoid then
-        ChangeState(Humanoid, Running)
-      end
-
-      if RigHumanoidRootPart then
-        HumanoidRootPart.AssemblyAngularVelocity = Vector3zero
-        HumanoidRootPart.AssemblyLinearVelocity = Vector3zero
-
-        HumanoidRootPart.CFrame = RigHumanoidRootPart.CFrame + Vector3new(mathrandom(- 16, 16), 0, mathrandom(- 16, 16))
-      end
-    end
-
-    taskwait(0.271)
-
-    if Character then
-      BreakJoints(Character)
-    end
-  end
-end
-
-local Color3FromHSV = Color3.fromHSV
-local function PostSimulationConnect()
-  sethiddenproperty(LocalPlayer, "SimulationRadius", 2147483647)
-
-  Time = osclock()
-  DeltaTime = Time - LastTime
-  LastTime = Time
-
-  local Integer = 29 + mathsin(Time)
-  local Vector3 = Vector3new(0, 0, 0.001 * mathsin(Time * 20))
-
-  for Index, Table in pairs(Tables) do
-    local Part0 = Table.Part0
-    local Part1 = Table.Part1
-
-    if Part0 and # GetJoints(Part0) == 0 and Part0.ReceiveAge == 0 and Part1 then
-      Part0.AssemblyAngularVelocity = Vector3zero
-
-      local Position = Part1.Position
-      local LinearVelocity = ( ( Table.LastPosition - Position ) / DeltaTime ) * Integer
-      Table.LastPosition = Position
-
-      Part0.AssemblyLinearVelocity = Vector3new(LinearVelocity.X, Integer, LinearVelocity.Z)
-
-      Part0.CFrame = Part1.CFrame * ( Table.CFrame or CFrameidentity ) + Vector3
-    end
-  end
-
-  if RigHumanoid and Humanoid then
-    RigHumanoid.Jump = Humanoid.Jump
-    Move(RigHumanoid, Humanoid.MoveDirection)
-  end
-
-  if not Success then
-    Success = pcall(SetCore, StarterGui, "ResetButtonCallback", BindableEvent)
-  else
-    SetCore(StarterGui, "ResetButtonCallback", BindableEvent)
-  end
-end
-
-local function PreSimulationConnect()
-  for Index, BasePart in pairs(BaseParts) do
-    BasePart.CanCollide = false
-  end
-end
-
-local function Fling(Target)
-  if typeof(Target) == "Instance" then
-    if IsA(Target, "Humanoid") then
-      Target = Target.Parent
-    end
-    if IsA(Target.Parent, "Accessory") then
-      Target = FindFirstAncestorOfClass(Target, "Model")
-    end
-    if IsA(Target, "Model") then
-      Target = FindFirstChildOfClassAndName(Target, "BasePart", "HumanoidRootPart")
-    end
-    if IsA(Target, "BasePart") then
-      for Index, Table in pairs(Targets) do
-        if Table.Target == Target then
-          return
-        end
-      end
-
-      local Parent = Target.Parent
-      local Highlight = Instancenew("Highlight")
-      Highlight.OutlineColor = Color3.new(0,0,0)
-      Highlight.Adornee = Parent
-      Highlight.Parent = Parent
-
-      tableinsert(Highlights, Highlight)
-      tableinsert(Targets, {Highlight = Highlight, Target = Target})
-    end
-  end
-end
-
-local function InputBegan(InputObject)
-  local UserInputType = InputObject.UserInputType
-
-  if UserInputType == MouseButton1 or UserInputType == Touch then
-    local Target = Mouse.Target
-
-    if Target and not Target.Anchored then
-      local Model = Target.Parent
-
-      if IsA(Model, "Model") and FindFirstChildOfClass(Model, "Humanoid") then
-        local HumanoidRootPart = FindFirstChildOfClassAndName(Model, "BasePart", "HumanoidRootPart")
-
-        if HumanoidRootPart then
-          Fling(HumanoidRootPart)
-        end
-      else
-        Fling(Target)
-      end
-    end
-  end
-end
-
-local function gameDescendantAdded(Instance)
-  if ( OptionsDisableGUIs and IsA(Instance, "ScreenGui") ) or ( OptionsDisableScripts and Instance ~= script and ( IsA(Instance, "LocalScript") or IsA(Instance, "Script") ) ) then
-    Enableds[Instance] = Instance.Enabled
-    Instance.Enabled = false
-
-    tableinsert(RBXScriptConnections, Connect(GetPropertyChangedSignal(Instance, "Enabled"), function()
-      Enableds[Instance] = Instance.Enabled
-      Instance.Enabled = false
-    end))
-  end
-end
-
-local function Stop()
-  for Index, RBXScriptConnection in pairs(RBXScriptConnections) do
-    Disconnect(RBXScriptConnection)
-  end
-  for Index, Highlight in pairs(Highlights) do
-    Destroy(Highlight)
-  end
-  for Instance, Boolean in pairs(Enableds) do
-    Instance.Enabled = Boolean
-  end
-
-  tableclear(Attachments)
-  tableclear(BaseParts)
-  tableclear(Enableds)
-  tableclear(Highlights)
-  tableclear(RBXScriptConnections)
-  tableclear(Tables)
-  tableclear(Targets)
-  tableclear(RigAccessories)
-  tableclear(Blacklist)
-
-  if Rig then
-    Destroy(Rig)
-  end
-
-  Destroy(BindableEvent)
-  SetCore(StarterGui, "ResetButtonCallback", true)
-
-	pcall(function()
-		stop()
-	end)
-end
-
-local Emperean = {
-  Stop = Stop,
-  Start = function(Table)
-    Options = Table or { }
-    OptionsAccessories = Table.Accessories or { }
-    OptionsDebug = Options.Debug or { }
-    OptionsDebugTransparency = OptionsDebug.Transparency or 1
-    OptionsFling = Options.Fling or false
-    OptionsDisableScripts = Options.DisableScripts or false
-    OptionsDisableGUIs = Options.DisableGUIs or false
-
-    if OptionsDisableScripts or OptionsDisableGUIs then
-      for Index, Instance in pairs(GetDescendants(game)) do
-        gameDescendantAdded(Instance)
-      end
-
-      tableinsert(RBXScriptConnections, Connect(game.DescendantAdded, gameDescendantAdded))
-    end
-
-    Boolean = true
-    LastTime = osclock()
-
-    Rig = Clone(Model)
-    RigHumanoid = Rig.Humanoid
-    RigHumanoidRootPart = Rig.HumanoidRootPart
-    Rig.Parent = Workspace
-
-    for Index, Instance in pairs(GetDescendants(Rig)) do
-      if IsA(Instance, "Attachment") then
-        Attachments[Instance.Name] = Instance
-      else
-        Invisible(Instance)
-      end
-    end
-
-    BindableEvent = Instancenew("BindableEvent")
-    Connect(BindableEvent.Event, Stop)
-
-    tableinsert(RBXScriptConnections, Connect(GetPropertyChangedSignal(Workspace, "CurrentCamera"), Camera))
-
-    CharacterAdded()
-    tableinsert(RBXScriptConnections, Connect(GetPropertyChangedSignal(LocalPlayer, "Character"), CharacterAdded))
-
-    if OptionsFling then
-      tableinsert(RBXScriptConnections, Connect(UserInputService.InputBegan, InputBegan))
-    end
-
-    tableinsert(RBXScriptConnections, Connect(PreSimulation, PreSimulationConnect))
-    tableinsert(RBXScriptConnections, Connect(PostSimulation, PostSimulationConnect))
-
-    return { 
-      Rig = Rig,
-      Options = Options,
-      Fling = Fling,
-    },
-    taskwait()
-  end,
-}
-                           
-return Emperean
